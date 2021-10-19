@@ -17,6 +17,7 @@ public class EduApplication {
 
     public static void main(String[] args) {
 
+        //这是测试  远程的 Git 控制：！！！
         SpringApplication.run(EduApplication.class, args);
 
     }

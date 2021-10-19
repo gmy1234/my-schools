@@ -73,7 +73,6 @@ public class SubjectServiceImpl extends ServiceImpl<SubjectMapper, Subject> impl
             OneSubjcet oneSubjcet = new OneSubjcet();
             //oneSubjcet.setId(subject.getId());
             //oneSubjcet.setTitle(subject.getTitle());
-
             // 属性拷贝，=上边两行代码
             BeanUtils.copyProperties(subject,oneSubjcet);
             // 把 onesubjcet 放到 finalSubjectList 里边
