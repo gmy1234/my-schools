@@ -24,13 +24,11 @@ public class CourseController {
     @Autowired
     private CourseService courseService;
 
-    // 添加课程基本信息的方法
     @ApiOperation(value = "添加课程基本信息")
     @PostMapping("addCourseInfo")
     public R addCourseInfo(@RequestBody CourseInfoVo courseInfoVo){
 
         courseService.insertCourseInfo(courseInfoVo);
-
         return R.ok();
     }
 

@@ -39,9 +39,9 @@ public class SubjectServiceImpl extends ServiceImpl<SubjectMapper, Subject> impl
         try {
             InputStream in = file.getInputStream();
             EasyExcel.read(in, SubjectData.class, new SubjectExcelListener(subjectService)).sheet().doRead();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            throw new GuliException(20002,"添加课程分类失败");
+            throw new GuliException(20002, "添加课程分类失败");
         }
 
     }
@@ -49,6 +49,7 @@ public class SubjectServiceImpl extends ServiceImpl<SubjectMapper, Subject> impl
     /**
      * 课程分类 列表（ 树形 ）
      * 查询
+     *
      * @return
      */
     @Override
@@ -74,18 +75,18 @@ public class SubjectServiceImpl extends ServiceImpl<SubjectMapper, Subject> impl
             //oneSubjcet.setId(subject.getId());
             //oneSubjcet.setTitle(subject.getTitle());
             // 属性拷贝，=上边两行代码
-            BeanUtils.copyProperties(subject,oneSubjcet);
+            BeanUtils.copyProperties(subject, oneSubjcet);
             // 把 onesubjcet 放到 finalSubjectList 里边
             finalSubjectList.add(oneSubjcet);
 
-//            4.封装二级分类
+            // 4.封装二级分类
             List<TwoSubjcet> finalTwoSubjectList = new ArrayList<>();
             for (int j = 0; j < subjectTwoList.size(); j++) {
                 Subject tSubject = subjectTwoList.get(j);
 
                 // 判断 二级分类的pid 和一分类的id是否==
-                if(tSubject.getParentId().equals(subject.getId())){
-                    TwoSubjcet twoSubjcet  = new TwoSubjcet();
+                if (tSubject.getParentId().equals(subject.getId())) {
+                    TwoSubjcet twoSubjcet = new TwoSubjcet();
 
                     BeanUtils.copyProperties(tSubject, twoSubjcet);
                     finalTwoSubjectList.add(twoSubjcet);
@@ -94,10 +95,7 @@ public class SubjectServiceImpl extends ServiceImpl<SubjectMapper, Subject> impl
             }
             // 把一级分类下的二级分类 都添加到 一级分类里边
             oneSubjcet.setChildren(finalTwoSubjectList);
-
         }
-
-
         return finalSubjectList;
     }
 }

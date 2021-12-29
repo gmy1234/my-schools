@@ -20,5 +20,4 @@ public class OneSubjcet {
 
     //一个一级分类，有多个二级分类    一对多
     private List<TwoSubjcet> children = new ArrayList<>();
-
 }

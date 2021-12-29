@@ -27,6 +27,8 @@ import lombok.experimental.Accessors;
 @ApiModel(value="Course对象", description="课程表：cin存储课程基本信息")
 public class Course implements Serializable {
 
+    public static final String COURSE_DRAFT = "Draft";
+    public static final String COURSE_NORMAL = "Normal";
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "课程ID")
@@ -39,7 +41,7 @@ public class Course implements Serializable {
     @ApiModelProperty(value = "课程专业ID")
     private String subjectId;
 
-    @ApiModelProperty(value = "课程专业父级ID")
+    @ApiModelProperty(value = "一级分类ID")
     private String subjectParentId;
 
     @ApiModelProperty(value = "课程标题")

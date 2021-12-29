@@ -8,6 +8,7 @@ import com.gmy.edu.service.CourseDescriptionService;
 import com.gmy.edu.service.CourseService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.gmy.pojo.GuliException;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,25 +29,21 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
 
     @Override
     public void insertCourseInfo(CourseInfoVo courseInfoVo) {
-
-        // 向 课程中 添加方法：
+        // 向 课程表中 添加数据：
         Course course = new Course();
         // 把courseInfoVo 对象 转换成 course
-
         BeanUtils.copyProperties(courseInfoVo,course);
-        int count = baseMapper.insert(course);
-
+        course.setIsDeleted(0);
+        int count = this.baseMapper.insert(course);
         if (count == 0){
             throw new GuliException(20001, "添加课程信息失败");
         }
 
-        // 2. 向课程简介中 添加  描述信息
+        // 2. 向课程简介中添加描述信息
         CourseDescription courseDescription = new CourseDescription();
         courseDescription.setDescription(courseInfoVo.getDescription());
         //添加的是course ，需要course 的id；
         courseDescription.setId(course.getId());
         courseDescriptionService.save(courseDescription);
-
-
     }
 }
