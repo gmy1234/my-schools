@@ -38,8 +38,6 @@ public class EduTeacherController {
     public R getALlTeacher(){
 
         final List<EduTeacher> list = eduTeacherService.list(null);
-
-
         return R.ok().data("teachers",list);
     }
 

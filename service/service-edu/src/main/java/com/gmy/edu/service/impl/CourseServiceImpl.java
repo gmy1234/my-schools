@@ -1,5 +1,6 @@
 package com.gmy.edu.service.impl;
 
+import com.gmy.edu.pojo.Chapter;
 import com.gmy.edu.pojo.Course;
 import com.gmy.edu.mapper.CourseMapper;
 import com.gmy.edu.pojo.CourseDescription;
@@ -28,7 +29,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
     CourseDescriptionService courseDescriptionService;
 
     @Override
-    public void insertCourseInfo(CourseInfoVo courseInfoVo) {
+    public String insertCourseInfo(CourseInfoVo courseInfoVo) {
         // 向 课程表中 添加数据：
         Course course = new Course();
         // 把courseInfoVo 对象 转换成 course
@@ -45,5 +46,39 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         //添加的是course ，需要course 的id；
         courseDescription.setId(course.getId());
         courseDescriptionService.save(courseDescription);
+        return course.getId();
+    }
+
+    /**
+     * 根据课程ID查课程详情
+     * @param courseId
+     * @return
+     */
+    @Override
+    public CourseInfoVo getCourseDetail(String courseId) {
+        CourseInfoVo response = new CourseInfoVo();
+        // 查询课程表
+        Course courseInfo = this.baseMapper.selectById(courseId);
+        // 课程描述表
+        CourseDescription description = courseDescriptionService.getById(courseId);
+        BeanUtils.copyProperties(courseInfo, response);
+        response.setDescription(description.getDescription());
+        return response;
+    }
+
+    @Override
+    public void updateDetail(CourseInfoVo info) {
+        Course course = new Course();
+        BeanUtils.copyProperties(info, course);
+        // 修改课程表
+        int x = this.baseMapper.updateById(course);
+        if (x == 0) {
+            throw new GuliException(20001, "修改课程信息失败");
+        }
+        CourseDescription description = new CourseDescription();
+        description.setId(info.getId());
+        description.setDescription(info.getDescription());
+        // 修改描述
+        courseDescriptionService.updateById(description);
     }
 }

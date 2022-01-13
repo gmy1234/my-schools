@@ -25,10 +25,23 @@ public class CourseController {
     private CourseService courseService;
 
     @ApiOperation(value = "添加课程基本信息")
-    @PostMapping("addCourseInfo")
+    @PostMapping("/addCourseInfo")
     public R addCourseInfo(@RequestBody CourseInfoVo courseInfoVo){
+        String courseId = courseService.insertCourseInfo(courseInfoVo);
+        return R.ok().data("courseId", courseId);
+    }
 
-        courseService.insertCourseInfo(courseInfoVo);
+    @ApiOperation(value = "根据课程ID获取课程详情")
+    @RequestMapping(value = "/getCourseDetail/{courseId}",method = RequestMethod.GET)
+    public R getCourseDetail(@PathVariable String courseId){
+        CourseInfoVo info = courseService.getCourseDetail(courseId);
+        return R.ok().data("courseInfo", info);
+    }
+
+    @ApiOperation(value = "修改课程信息")
+    @RequestMapping(value = "/updateDetail",method = RequestMethod.POST)
+    public R updateDetail(@RequestBody CourseInfoVo info){
+        courseService.updateDetail(info);
         return R.ok();
     }
 

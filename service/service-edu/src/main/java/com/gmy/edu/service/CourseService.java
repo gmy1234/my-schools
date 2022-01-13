@@ -14,5 +14,18 @@ import com.gmy.edu.pojo.vo.CourseInfoVo;
  */
 public interface CourseService extends IService<Course> {
 
-    void insertCourseInfo(CourseInfoVo courseInfoVo);
+    String insertCourseInfo(CourseInfoVo courseInfoVo);
+
+    /**
+     * 根据课程ID查课程详情
+     * @param courseId
+     * @return
+     */
+    CourseInfoVo getCourseDetail(String courseId);
+
+    /**
+     * 修改课程详情
+     * @param info
+     */
+    void updateDetail(CourseInfoVo info);
 }

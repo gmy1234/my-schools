@@ -3,13 +3,11 @@ package com.gmy.edu.controller;
 
 import com.gmy.commonutils.R;
 import com.gmy.edu.pojo.vo.ChapterVo;
+import com.gmy.edu.pojo.vo.CourseInfoVo;
 import com.gmy.edu.service.ChapterService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,12 +22,14 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/edu/chapter")
+@CrossOrigin
 public class ChapterController {
 
     @Autowired
     private ChapterService chapterService;
 
-    @RequestMapping(value = "getChapterVideo/{courseId}",method = RequestMethod.GET)
+    @ApiOperation(value = "根据课程ID获取章节和小节的信息")
+    @RequestMapping(value = "/getChapterVideo/{courseId}",method = RequestMethod.GET)
     public R getChapterVideo(@PathVariable String courseId){
         List<ChapterVo> list = chapterService.getChapterVideoByCourseId(courseId);
         return R.ok().data("allChapterVideo", list);

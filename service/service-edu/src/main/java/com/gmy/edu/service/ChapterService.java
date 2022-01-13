@@ -18,5 +18,4 @@ import java.util.List;
 public interface ChapterService extends IService<Chapter> {
 
     List<ChapterVo> getChapterVideoByCourseId(String courseId);
-
 }
